@@ -1,0 +1,35 @@
+php:
+    build: ./zf2-docker
+    ports:
+      - "80:80"
+    links:
+      - "mysql"
+      - "postgres"
+      - "solr"
+    volumes:
+      - ~/docker_data/zf2:/opt
+
+mysql:
+    build: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ~/docker_data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "surenkid"
+
+postgres:
+    build: ./postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/docker_data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "surenkid"
+
+solr:
+    build: ./solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ~/docker_data/solr:/opt/solr/server/solr/mycores
