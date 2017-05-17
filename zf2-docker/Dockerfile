@@ -1,1 +1,0 @@
-FROM surenkid/docker-zf2:latest

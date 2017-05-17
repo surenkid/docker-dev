@@ -1,1 +1,0 @@
-FROM postgres:9.0.22
