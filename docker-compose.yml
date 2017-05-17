@@ -1,5 +1,5 @@
 php:
-    build: ./zf2-docker
+    image: surenkid/docker-zf2:latest
     ports:
       - "80:80"
     links:
@@ -10,7 +10,7 @@ php:
       - ~/docker_data/zf2:/opt
 
 mysql:
-    build: ./mysql
+    image: mysql:5.7.16
     ports:
       - "3306:3306"
     volumes:
@@ -19,7 +19,7 @@ mysql:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
 postgres:
-    build: ./postgres
+    image: postgres:9.0.22
     ports:
       - "5432:5432"
     volumes:
@@ -28,7 +28,7 @@ postgres:
       POSTGRES_PASSWORD: "surenkid"
 
 solr:
-    build: ./solr
+    image: solr:5.5.4
     ports:
       - "8983:8983"
     volumes:
