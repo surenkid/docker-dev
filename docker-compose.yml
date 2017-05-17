@@ -1,15 +1,17 @@
-php:
+version: "3"
+services:
+  php:
     image: surenkid/docker-zf2:latest
     ports:
       - "80:80"
-    links:
+    depends_on:
       - "mysql"
       - "postgres"
       - "solr"
     volumes:
-      - ~/docker_data/zf2:/opt
+      - ~/docker_data/wwwroot:/zf2-app
 
-mysql:
+  mysql:
     image: mysql:5.7.16
     ports:
       - "3306:3306"
@@ -18,18 +20,23 @@ mysql:
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
-postgres:
+  postgres:
     image: postgres:9.0.22
     ports:
       - "5432:5432"
     volumes:
-      - ~/docker_data/postgres:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: "surenkid"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
 
-solr:
+  solr:
     image: solr:5.5.4
     ports:
       - "8983:8983"
     volumes:
       - ~/docker_data/solr:/opt/solr/server/solr/mycores
+ 
+volumes:
+  db-data:
