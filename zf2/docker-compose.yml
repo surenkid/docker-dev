@@ -55,6 +55,6 @@ services:
       - mycore
 
 networks: 
-  - dockerinnernet:
+  dockerinnernet:
 #volumes:
 #  db-data:
