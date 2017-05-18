@@ -23,6 +23,7 @@ services:
       - dockerinnernet
     volumes:
       - mydata:/var/lib/mysql
+      - ~/docker_data/dbdump:/root
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
@@ -35,6 +36,7 @@ services:
       - dockerinnernet
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ~/docker_data/dbdump:/root
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
