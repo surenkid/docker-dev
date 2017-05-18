@@ -6,7 +6,7 @@
 
 git clone到本地后，终端进入到zf2目录下，输入：
 
-  docker-composer up
+    docker-composer up
 
 ## 恢复数据
 
@@ -16,19 +16,19 @@ git clone到本地后，终端进入到zf2目录下，输入：
 
 ### 导入mysql备份
 
-  docker exec -it MYSQL_CONTAINER_ID bash
-  cd
-  mysql -uroot -p
-  create table zf2_mysql;
-  set names utf8;
-  source backup.sql
+    docker exec -it MYSQL_CONTAINER_ID bash
+    cd
+    mysql -uroot -p
+    create table zf2_mysql;
+    set names utf8;
+    source backup.sql
   
 ### 导入postgresql备份
 
-  docker exec -it POSTGRES_CONTAINER_ID bash
-  cd
-  psql -U postgres
-  create table zf2_pgsql;
-  \q
-  pg_restore -U postgres -d zf2_pgsql backup.tar
+    docker exec -it POSTGRES_CONTAINER_ID bash
+    cd
+    psql -U postgres
+    create table zf2_pgsql;
+    \q
+    pg_restore -U postgres -d zf2_pgsql backup.tar
   
