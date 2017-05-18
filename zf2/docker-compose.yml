@@ -5,7 +5,7 @@ services:
     container_name: zf2-webserver
     ports:
       - "80:80"
-    links:
+    depends_on:
       - "mysql"
       - "postgres"
       - "solr"
@@ -18,9 +18,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ~/docker_data/mysql/mydata:/var/lib/mysql
-      - ~/docker_data/mysql/my.cnf:/etc/mysql/my.conf
-      - ~/docker_data/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.conf
+      - ~/docker_data/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
