@@ -2,9 +2,10 @@ version: "3"
 services:
   php:
     image: surenkid/docker-zf2:latest
+    container_name: zf2-webserver
     ports:
       - "80:80"
-    depends_on:
+    links:
       - "mysql"
       - "postgres"
       - "solr"
@@ -13,19 +14,23 @@ services:
 
   mysql:
     image: mysql:5.7.16
+    container_name: zf2-mysql
     ports:
       - "3306:3306"
     volumes:
-      - ~/docker_data/mysql:/var/lib/mysql
+      - ~/docker_data/mysql/mydata:/var/lib/mysql
+      - ~/docker_data/mysql/my.cnf:/etc/mysql/my.conf
+      - ~/docker_data/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.conf
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
   postgres:
     image: postgres:9.0.22
+    container_name: zf2-postgres
     ports:
       - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ~/docker_data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
@@ -33,6 +38,7 @@ services:
 
   solr:
     image: solr:5.5.4
+    container_name: zf2-solr
     ports:
       - "8983:8983"
     volumes:
@@ -42,5 +48,5 @@ services:
       - solr-precreate
       - mycore
  
-volumes:
-  db-data:
+#volumes:
+#  db-data:
