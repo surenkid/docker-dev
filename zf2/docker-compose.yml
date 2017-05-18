@@ -5,6 +5,8 @@ services:
     container_name: zf2-webserver
     ports:
       - "80:80"
+    networks:
+      - dockerinnernet
     depends_on:
       - "mysql"
       - "postgres"
@@ -17,6 +19,8 @@ services:
     container_name: zf2-mysql
     ports:
       - "3306:3306"
+    networks: 
+      - dockerinnernet
     volumes:
       - ~/docker_data/mysql:/var/lib/mysql
     environment:
@@ -27,6 +31,8 @@ services:
     container_name: zf2-postgres
     ports:
       - "5432:5432"
+    networks: 
+      - dockerinnernet
     volumes:
       - ~/docker_data/postgres:/var/lib/postgresql/data
     environment:
@@ -39,12 +45,16 @@ services:
     container_name: zf2-solr
     ports:
       - "8983:8983"
+    networks: 
+      - dockerinnernet
     volumes:
       - ~/docker_data/solr:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
       - mycore
- 
+
+networks: 
+  - dockerinnernet:
 #volumes:
 #  db-data:
