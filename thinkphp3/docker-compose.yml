@@ -11,7 +11,7 @@ services:
       - "php"
     volumes:
       - ~/docker_data2/nginx:/etc/nginx/conf.d
-      - ~/docker_data2/wwwroot:/usr/share/nginx/html:ro
+      - ~/docker_data2/wwwroot:/var/www/html:ro
 
   php:
     image: surenkid/php53-mssql-redis:latest
