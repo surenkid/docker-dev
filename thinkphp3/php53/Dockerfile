@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER https://github.com/helderco/
+MAINTAINER https://github.com/surenkid/
 
 # persistent / runtime deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -95,7 +95,6 @@ RUN buildDeps=" \
             --with-readline \
             --with-recode \
             --with-zlib \
-            --with-mssql=/usr/local/freetds \
       && make -j"$(nproc)" \
       && make install \
       && { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
@@ -112,8 +111,11 @@ RUN cd /tmp \
       && tar -xof phpredis.tar.gz -C /usr/src/php/ext/phpredis --strip-components=1 \
       && rm -rf /tmp/*
 
-RUN bash docker-php-ext-install phpredis \
-      && bash docker-php-ext-configure phpredis
+RUN bash docker-php-ext-configure phpredis \
+      && bash docker-php-ext-install phpredis
+
+RUN bash docker-php-ext-configure mssql --with-mssql=/usr/local/freetds \
+      && bash docker-php-ext-install mssql
 
 WORKDIR /var/www/html
 
@@ -151,8 +153,8 @@ RUN set -ex \
     echo 'listen = 9000'; \
   } | tee php-fpm.d/zz-docker.conf
 
-# fix some weird corruption in this file
-RUN sed -i -e "" /usr/local/etc/php-fpm.d/www.conf
+# fix php-fpm listen address
+RUN sed -i -e "s/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/g" /usr/local/etc/php-fpm.d/www.conf
 
 EXPOSE 9000
 CMD ["php-fpm"]
