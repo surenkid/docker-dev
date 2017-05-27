@@ -14,7 +14,7 @@ services:
       - ~/docker_data2/wwwroot:/var/www/html:ro
 
   php:
-    image: surenkid/php53-mssql-redis:latest
+    image: surenkid/php53:latest
     container_name: tp3-php
     ports:
       - "9000:9000"
