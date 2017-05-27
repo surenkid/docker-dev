@@ -22,6 +22,7 @@ services:
       - dockerinnernet
     depends_on:
       - "mysql"
+      - "redis"
     volumes:
       - ~/docker_data2/wwwroot:/var/www/html
 
@@ -37,6 +38,16 @@ services:
       - ~/docker_data2/dbdump:/root
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
+
+  redis:
+    image: redis:3.0-alpine
+    container_name: tp3-redis
+    ports:
+      - "6379:6379"
+    networks: 
+      - dockerinnernet
+    volumes:
+      - ~/docker_data2/redis:/data
 
 networks: 
   dockerinnernet:
