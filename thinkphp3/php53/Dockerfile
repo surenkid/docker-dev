@@ -116,19 +116,21 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
-      # Fix php 5.3 can't found freetype.h error
-      && mkdir /usr/include/freetype2/freetype \
-      && ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h \
-      # install common extension
-      && docker-php-ext-install -j$(nproc) iconv mcrypt mysqli mbstring \
-      && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-      && docker-php-ext-install -j$(nproc) gd
+        && rm -rf /var/lib/apt/lists/*
+        
+# Fix php 5.3 can't found freetype.h error, fix docker-php-ext-install script exec error
+RUN mkdir /usr/include/freetype2/freetype \
+        && ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h \
+        && chmod +x /usr/local/bin/docker-php-*
 
-RUN bash docker-php-ext-configure phpredis \
-      && bash docker-php-ext-install phpredis
-
-RUN bash docker-php-ext-configure mssql --with-mssql=/usr/local/freetds \
-      && bash docker-php-ext-install mssql
+# install php extension
+RUN docker-php-ext-install iconv mbstring mcrypt mysqli \
+        && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+        && docker-php-ext-install gd \
+        && docker-php-ext-configure phpredis \
+        && docker-php-ext-install phpredis \
+        && docker-php-ext-configure mssql --with-mssql=/usr/local/freetds \
+        && docker-php-ext-install mssql
 
 WORKDIR /var/www/html
 
