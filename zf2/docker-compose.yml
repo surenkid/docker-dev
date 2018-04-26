@@ -11,6 +11,7 @@ services:
       - "mysql"
       - "postgres"
       - "solr"
+      - "elasticsearch"
     volumes:
       - ~/docker_data/wwwroot:/zf2-app
 
@@ -55,6 +56,38 @@ services:
       - docker-entrypoint.sh
       - solr-precreate
       - mycore
+      
+  elasticsearch:
+    image: elasticsearch:5.6.9
+    container_name: zf2-elasticsearch
+    ports:
+      - 9200:9200
+    networks: 
+      - dockerinnernet
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ~/docker_data/elasticsearch:/usr/share/elasticsearch/data
+      
+  logstash:
+    build: ./logstash
+    container_name: zf2-logstash
+    networks: 
+      - dockerinnernet
+    volumes:
+      -  ~/docker_data/logstash:/config-dir
+    command: logstash -f /config-dir/logstash.conf
+    depends_on:
+      - elasticsearch
+      - mysql
 
 networks: 
   dockerinnernet:
