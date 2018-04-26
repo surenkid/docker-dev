@@ -1,0 +1,6 @@
+FROM logstash:5.6.9
+MAINTAINER https://github.com/surenkid/
+
+RUN logstash-plugin install logstash-input-jdbc
+
+CMD ["-f", "/config-dir/logstash.conf"]
