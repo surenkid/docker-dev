@@ -10,8 +10,8 @@ services:
     depends_on:
       - "php"
     volumes:
-      - ~/docker_data2/nginx:/etc/nginx/conf.d
-      - ~/docker_data2/wwwroot:/var/www/html:ro
+      - ~/Projects/tp3_project/nginx:/etc/nginx/conf.d
+      - ~/Projects/tp3_project/wwwroot:/var/www/html:ro
 
   php:
     image: surenkid/php53:latest
@@ -24,7 +24,7 @@ services:
       - "mysql"
       - "redis"
     volumes:
-      - ~/docker_data2/wwwroot:/var/www/html
+      - ~/Projects/tp3_project/wwwroot:/var/www/html
 
   mysql:
     image: mysql:5.6.36
@@ -35,7 +35,7 @@ services:
       - dockerinnernet
     volumes:
       - mydata:/var/lib/mysql
-      - ~/docker_data2/dbdump:/root
+      - ~/Projects/tp3_project/dbdump:/root
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
@@ -47,7 +47,7 @@ services:
     networks: 
       - dockerinnernet
     volumes:
-      - ~/docker_data2/redis:/data
+      - ~/Projects/tp3_project/redis:/data
 
 networks: 
   dockerinnernet:
