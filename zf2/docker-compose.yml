@@ -13,7 +13,7 @@ services:
       - "solr"
       - "elasticsearch"
     volumes:
-      - ~/docker_data/wwwroot:/zf2-app
+      - ~/Projects/zf2_project/wwwroot:/zf2-app
 
   mysql:
     image: mysql:5.7.16
@@ -24,7 +24,7 @@ services:
       - dockerinnernet
     volumes:
       - mydata:/var/lib/mysql
-      - ~/docker_data/dbdump:/root
+      - ~/Projects/zf2_project/dbdump:/root
     environment:
       MYSQL_ROOT_PASSWORD: "surenkid"
 
@@ -37,7 +37,7 @@ services:
       - dockerinnernet
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ~/docker_data/dbdump:/root
+      - ~/Projects/zf2_project/dbdump:/root
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
@@ -51,7 +51,7 @@ services:
     networks: 
       - dockerinnernet
     volumes:
-      - ~/docker_data/solr:/opt/solr/server/solr/mycores
+      - ~/Projects/zf2_project/solr:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -75,7 +75,11 @@ services:
         soft: -1
         hard: -1
     volumes:
+<<<<<<< HEAD
       - ~/docker_data/elasticsearch:/usr/share/elasticsearch/data
+=======
+      - ~/Projects/zf2_project/elasticsearch:/usr/share/elasticsearch/data
+>>>>>>> ce4768fa2c1b3efa52edeb8b5d2d2574ba57d6f3
       
   logstash:
     build: ./logstash
@@ -83,7 +87,11 @@ services:
     networks: 
       - dockerinnernet
     volumes:
+<<<<<<< HEAD
       -  ~/docker_data/logstash:/config-dir
+=======
+      -  ~/Projects/zf2_project/logstash:/config-dir
+>>>>>>> ce4768fa2c1b3efa52edeb8b5d2d2574ba57d6f3
     command: logstash -f /config-dir/logstash.conf
     depends_on:
       - elasticsearch
