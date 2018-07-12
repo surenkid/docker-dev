@@ -1,0 +1,55 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:1.15-alpine
+    container_name: tp5-nginx
+    ports:
+      - "80:80"
+    networks:
+      - dockerinnernet
+    depends_on:
+      - "php"
+    volumes:
+      - ~/Projects/tp5_project/nginx:/etc/nginx/conf.d
+      - ~/Projects/tp5_project/wwwroot:/var/www/html:ro
+
+  php:
+    build: ./php7
+    container_name: tp5-php
+    ports:
+      - "9000:9000"
+    networks:
+      - dockerinnernet
+    depends_on:
+      - "mysql"
+      - "redis"
+    volumes:
+      - ~/Projects/tp5_project/wwwroot:/var/www/html
+
+  mysql:
+    image: mysql:5.7
+    container_name: tp5-mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - dockerinnernet
+    volumes:
+      - mydata:/var/lib/mysql
+      - ~/Projects/tp5_project/dbdump:/root
+    environment:
+      MYSQL_ROOT_PASSWORD: "surenkid"
+
+  redis:
+    image: redis:4-alpine
+    container_name: tp5-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dockerinnernet
+    volumes:
+      - ~/Projects/tp5_project/redis:/data
+
+networks:
+  dockerinnernet:
+volumes:
+  mydata:
