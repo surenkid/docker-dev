@@ -11,7 +11,7 @@ services:
       - "php"
     volumes:
       - ~/Projects/tp5_project/nginx:/etc/nginx/conf.d
-      - ~/Projects/tp5_project/wwwroot:/var/www/html:ro
+      - ~/Projects/tp5_project/wwwroot:/var/www/html
 
   php:
     image: surenkid/php7:latest
