@@ -14,7 +14,7 @@ services:
       - ~/Projects/tp5_project/wwwroot:/var/www/html:ro
 
   php:
-    build: ./php7
+    image: surenkid/php7:latest
     container_name: tp5-php
     ports:
       - "9000:9000"
