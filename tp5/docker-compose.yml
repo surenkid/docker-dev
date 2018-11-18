@@ -24,6 +24,7 @@ services:
       - "mysql"
       - "redis"
     volumes:
+      - "./php/php.ini:/usr/local/etc/php/php.ini"
       - "./wwwroot:/var/www/html"
 
   mysql:
