@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - dockerinnernet
+      - "php7net"
     depends_on:
       - "php"
     volumes:
@@ -19,7 +19,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - dockerinnernet
+      - "php7net"
     depends_on:
       - "mysql"
       - "redis"
@@ -33,7 +33,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - dockerinnernet
+      - "php7net"
     volumes:
       - "./mysql:/var/lib/mysql"
       - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
@@ -46,9 +46,9 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - dockerinnernet
+      - "php7net"
     volumes:
       - "./redis:/data"
 
 networks:
-  dockerinnernet:
+  php7net:
